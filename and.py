@@ -5,13 +5,13 @@ from utils.model import Perceptron
 
 import pandas as pd
 import numpy as np
-from logger import logging
+from logger import logger
 from exception import CustomException
 import sys
 import os
 
 gate = "AND gate"
-logging.info(f"started logging for {gate}")
+logger.info(f"started logger for {gate}")
 
 def main(data, modelName, plotName, eta, epochs):
     """
@@ -28,7 +28,7 @@ def main(data, modelName, plotName, eta, epochs):
     :param epochs: The number of times the entire dataset is passed through the model during training
     """
     df = pd.DataFrame(data)
-    logging.info(f'This is the raw Data - >\n{df}')
+    logger.info(f'This is the raw Data - >\n{df}')
     X, y = prepare_data(df)
    
     model = Perceptron(epochs=epochs, eta=eta)
@@ -53,11 +53,11 @@ if __name__ == "__main__":
     EPOCHS = 15
     
     try:
-        logging.info(f'{">"*10}started Training for {gate} {"<"*10}')
+        logger.info(f'{">"*10}started Training for {gate} {"<"*10}')
         main(data=AND,plotName='and.png',modelName='and.model',eta=ETA,epochs=EPOCHS)
-        logging.info(f'{"<"*10} Done Training for {gate} {">"*10}')
+        logger.info(f'{"<"*10} Done Training for {gate} {">"*10}')
          
     except Exception as e:
-        logging.info(f"Error Occurred at {CustomException(e,sys)}")
+        logger.info(f"Error Occurred at {CustomException(e,sys)}")
         raise CustomException(e, sys)        
 

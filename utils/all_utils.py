@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib.colors import ListedColormap
 plt.style.use("fivethirtyeight")
+from logger import logger
+from exception import CustomException
 
 
 def prepare_data(df, target_col="y"):
@@ -19,6 +21,7 @@ def prepare_data(df, target_col="y"):
     that contains all the columns of the input DataFrame `df` except for the `target_col` column. `y` is
     a pandas Series that contains the values of the `target_col` column of the input DataFrame `df`.
     """
+    logger.info('Preparing The Data')
     X = df.drop(target_col, axis=1)
 
     y = df[target_col]
@@ -47,6 +50,8 @@ def save_plots(df, model, filename="plot.png", plot_dir="plots"):
         
         :param df: The input dataframe containing the data to be plotted
         """
+        logger.info('Creating the Base plot')
+        
         df.plot(kind="scatter", x="x1", y="x2", c="y", s=100, cmap="coolwarm")
         plt.axhline(y=0, color="black", linestyle="--", linewidth=1)
         plt.axvline(x=0, color="black", linestyle="--", linewidth=1)
@@ -66,6 +71,7 @@ def save_plots(df, model, filename="plot.png", plot_dir="plots"):
         create the decision boundary plot. A smaller value will result in a more detailed plot, but may
         also increase the computation time
         """
+        logger.info('Crating The Decision Regions')
         colors = ("cyan", "lightgreen")
         cmap = ListedColormap(colors)
         

@@ -21,8 +21,23 @@ os.makedirs(LOG_DIR, exist_ok=True)
 LOG_FILE_PATH = os.path.join(LOG_DIR, LOG_FILE_NAME)
 
 
-logging.basicConfig(filename=LOG_FILE_PATH,
-                    filemode='w',
-                    format="[%(asctime)s] || %(filename)s || %(lineno)d || %(name)s || %(funcName)s() || %(levelname)s -->> %(message)s",
-                    level=logging.INFO,
-                    )
+# Create logger
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+# Create formatter
+formatter = logging.Formatter("[%(asctime)s] || %(pathname)s || %(module)s || %(filename)s || %(lineno)d || %(name)s || %(funcName)s() || %(levelname)s -->> %(message)s")
+
+# Create file handler
+file_handler = logging.FileHandler(LOG_FILE_PATH, mode='w')
+file_handler.setLevel(logging.INFO)
+file_handler.setFormatter(formatter)
+
+# Create stream handler
+stream_handler = logging.StreamHandler()
+stream_handler.setLevel(logging.INFO)
+stream_handler.setFormatter(formatter)
+
+# Add handlers to the logger
+logger.addHandler(file_handler)
+logger.addHandler(stream_handler)
